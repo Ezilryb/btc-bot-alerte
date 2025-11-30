@@ -6,11 +6,11 @@ import os
 # ================= CONFIGURATION =================
 # Ajoute ou retire des lignes très facilement
 ALERTES = [
-    {"crypto": "bitcoin",      "sym": "BTC",  "palier": 10000, "channel_id": 1441472260757131327},  # salon 1
-    {"crypto": "ethereum",     "sym": "ETH",  "palier": 5000,  "channel_id": 1443336254493036554},  # change l'ID
-    {"crypto": "solana",       "sym": "SOL",  "palier": 1000,  "channel_id": 1443254422204317809},  # change l'ID
-    {"crypto": "dogecoin",     "sym": "DOGE", "palier": 500,   "channel_id": 1443254795392651305},  # change l'ID
-    {"crypto": "bittensor",    "sym": "TAO",  "palier": 100,   "channel_id": 1443336082174513264},  # change l'ID
+    {"crypto": "bitcoin",      "sym": "BTC",  "palier": 5000, "channel_id": 1441472260757131327},  # salon 1
+    {"crypto": "ethereum",     "sym": "ETH",  "palier": 2500,  "channel_id": 1443336254493036554},  # change l'ID
+    {"crypto": "solana",       "sym": "SOL",  "palier": 500,  "channel_id": 1443254422204317809},  # change l'ID
+    {"crypto": "dogecoin",     "sym": "DOGE", "palier": 0.1,   "channel_id": 1443254795392651305},  # change l'ID
+    {"crypto": "bittensor",    "sym": "TAO",  "palier": 50,   "channel_id": 1443336082174513264},  # change l'ID
 ]
 
 # Stockage du dernier palier franchi pour chaque crypto
