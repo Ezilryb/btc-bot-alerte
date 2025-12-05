@@ -32,7 +32,7 @@ async def initialize_paliers():
                 continue
             palier_actuel = (prix // item["palier"]) * item["palier"]
             derniers_paliers[crypto] = palier_actuel
-            print(f"Initialisé {item['sym']} à ${palier_actuel:,}")
+            print(f"Initialisé {item['sym']} à ${palier_actuel:,.2f}")
 
     except Exception as e:
         print("Erreur lors de l'initialisation des paliers :", e)
@@ -54,16 +54,27 @@ async def check_all_prices():
 
             palier_actuel = (prix // item["palier"]) * item["palier"]
 
-            # Alerte uniquement à la hausse
-            if palier_actuel > derniers_paliers[crypto]:
-                channel = client.get_channel(item["channel_id"])
-                if channel:
+            channel = client.get_channel(item["channel_id"])
+            if channel:
+                if palier_actuel > derniers_paliers[crypto]:
+                    # Alerte à la hausse
+                    threshold = palier_actuel
                     await channel.send(
-                        f"@{sym.lower()} **{sym} VIENT DE FRANCHIR ${palier_actuel:,}** !\n"
+                        f"@{sym.lower()} **{sym} VIENT DE FRANCHIR ${threshold:,.2f}** !\n"
                         f"Prix actuel ≈ ${prix:,.2f}"
                     )
                     derniers_paliers[crypto] = palier_actuel
-                    print(f"{sym} → ${palier_actuel:,}")
+                    print(f"{sym} ↑ ${threshold:,.2f}")
+
+                elif palier_actuel < derniers_paliers[crypto]:
+                    # Alerte à la baisse
+                    threshold = palier_actuel + item["palier"]
+                    await channel.send(
+                        f"@{sym.lower()} **{sym} VIENT DE PASSER EN DESSOUS DE ${threshold:,.2f}** !\n"
+                        f"Prix actuel ≈ ${prix:,.2f}"
+                    )
+                    derniers_paliers[crypto] = palier_actuel
+                    print(f"{sym} ↓ ${threshold:,.2f}")
 
     except Exception as e:
         print("Erreur lors de la récupération des prix :", e)
