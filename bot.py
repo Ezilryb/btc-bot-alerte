@@ -5,12 +5,13 @@ import os
 
 # ================= CONFIGURATION =================
 # Ajoute ou retire des lignes très facilement
+# Ajoutez l'ID du rôle pour chaque crypto (obtenez-le via Discord : Paramètres serveur > Rôles > Copier ID)
 ALERTES = [
-    {"crypto": "bitcoin",      "sym": "BTC",  "palier": 5000, "channel_id": 1441472260757131327},  # salon 1
-    {"crypto": "ethereum",     "sym": "ETH",  "palier": 2500,  "channel_id": 1443336254493036554},  # change l'ID
-    {"crypto": "solana",       "sym": "SOL",  "palier": 500,  "channel_id": 1443254422204317809},  # change l'ID
-    {"crypto": "dogecoin",     "sym": "DOGE", "palier": 0.1,   "channel_id": 1443254795392651305},  # change l'ID
-    {"crypto": "bittensor",    "sym": "TAO",  "palier": 50,   "channel_id": 1443336082174513264},  # change l'ID
+    {"crypto": "bitcoin",      "sym": "BTC",  "palier": 5000, "channel_id": 1441472260757131327, "role_id": 123456789012345678},  # Remplacez par l'ID réel du rôle (ex. "btc-alert")
+    {"crypto": "ethereum",     "sym": "ETH",  "palier": 2500,  "channel_id": 1443336254493036554, "role_id": 123456789012345678},  # Remplacez par l'ID réel
+    {"crypto": "solana",       "sym": "SOL",  "palier": 500,  "channel_id": 1443254422204317809, "role_id": 123456789012345678},  # Remplacez par l'ID réel
+    {"crypto": "dogecoin",     "sym": "DOGE", "palier": 0.1,   "channel_id": 1443254795392651305, "role_id": 123456789012345678},  # Remplacez par l'ID réel
+    {"crypto": "bittensor",    "sym": "TAO",  "palier": 50,   "channel_id": 1443336082174513264, "role_id": 123456789012345678},  # Remplacez par l'ID réel
 ]
 
 # Stockage du dernier palier franchi pour chaque crypto
@@ -56,11 +57,17 @@ async def check_all_prices():
 
             channel = client.get_channel(item["channel_id"])
             if channel:
+                role_mention = ""
+                if "role_id" in item and item["role_id"]:
+                    role = channel.guild.get_role(item["role_id"])
+                    if role:
+                        role_mention = f"{role.mention} "  # Ajoute la mention du rôle (ex. <@&ID>)
+
                 if palier_actuel > derniers_paliers[crypto]:
                     # Alerte à la hausse
                     threshold = palier_actuel
                     await channel.send(
-                        f"@{sym.lower()} **{sym} VIENT DE FRANCHIR ${threshold:,.2f}** !\n"
+                        f"{role_mention}**{sym} VIENT DE FRANCHIR ${threshold:,.2f}** !\n"
                         f"Prix actuel ≈ ${prix:,.2f}"
                     )
                     derniers_paliers[crypto] = palier_actuel
@@ -70,7 +77,7 @@ async def check_all_prices():
                     # Alerte à la baisse
                     threshold = palier_actuel + item["palier"]
                     await channel.send(
-                        f"@{sym.lower()} **{sym} VIENT DE PASSER EN DESSOUS DE ${threshold:,.2f}** !\n"
+                        f"{role_mention}**{sym} VIENT DE PASSER EN DESSOUS DE ${threshold:,.2f}** !\n"
                         f"Prix actuel ≈ ${prix:,.2f}"
                     )
                     derniers_paliers[crypto] = palier_actuel
