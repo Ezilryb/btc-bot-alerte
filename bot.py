@@ -7,11 +7,11 @@ import os
 # Ajoute ou retire des lignes très facilement
 # Ajoutez l'ID du rôle pour chaque crypto (obtenez-le via Discord : Paramètres serveur > Rôles > Copier ID)
 ALERTES = [
-    {"crypto": "bitcoin",      "sym": "BTC",  "palier": 1, "channel_id": 1441472260757131327, "role_id": 1443999707423703252},  # Remplacez par l'ID réel du rôle (ex. "btc-alert")
+    {"crypto": "bitcoin",      "sym": "BTC",  "palier": 1000, "channel_id": 1441472260757131327, "role_id": 1443999707423703252},  # Remplacez par l'ID réel du rôle (ex. "btc-alert")
     {"crypto": "ethereum",     "sym": "ETH",  "palier": 1,  "channel_id": 1443336254493036554, "role_id": 1444000028287832205},  # Remplacez par l'ID réel
     {"crypto": "solana",       "sym": "SOL",  "palier": 0.1,  "channel_id": 1443254422204317809, "role_id": 1444000115277828157},  # Remplacez par l'ID réel
-    {"crypto": "dogecoin",     "sym": "DOGE", "palier": 0.01,   "channel_id": 1443254795392651305, "role_id": 1444000201743401081},  # Remplacez par l'ID réel
-    {"crypto": "bittensor",    "sym": "TAO",  "palier": 0.1,   "channel_id": 1443336082174513264, "role_id": 1444000642648510595},  # Remplacez par l'ID réel
+    {"crypto": "dogecoin",     "sym": "DOGE", "palier": .1,   "channel_id": 1443254795392651305, "role_id": 1444000201743401081},  # Remplacez par l'ID réel
+    {"crypto": "bittensor",    "sym": "TAO",  "palier": 100,   "channel_id": 1443336082174513264, "role_id": 1444000642648510595},  # Remplacez par l'ID réel
 ]
 
 # Stockage du dernier palier franchi pour chaque crypto
